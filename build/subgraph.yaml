@@ -1,0 +1,57 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Bridge
+    network: matic
+    source:
+      address: "0xf18aCC02628009231d7BAAF9a7a24C0860Dda6cb"
+      abi: Bridge
+      startBlock: 24027325
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - DepositSource
+        - ProposalDestination
+        - AllTransaction
+      abis:
+        - name: Bridge
+          file: Bridge/abis/Bridge.json
+      eventHandlers:
+        - event: Deposit(indexed uint8,indexed bytes32,indexed uint64,uint256)
+          handler: handleDepositSource
+        - event: Settlement(indexed uint8,indexed uint64,address,uint256,uint8)
+          handler: handleSettelementDestination
+        - event: ProposalEvent(uint8,uint64,uint8,bytes32)
+          handler: handleProposalDestination
+        - event: SequencerEvent(uint8,uint64,uint8,bytes32)
+          handler: handleSequencerDestination
+        - event: Stake(indexed address,uint256,address)
+          handler: handleStake
+        - event: Unstake(indexed address,uint256,address)
+          handler: handleUnstake
+      file: Bridge/Bridge.wasm
+  - kind: ethereum
+    name: OneSplit
+    network: matic
+    source:
+      address: "0x513f1E1123a985B17F35267a80BF7F8d7698B0D0"
+      abi: OneSplit
+      startBlock: 35447983
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Swap
+      abis:
+        - name: OneSplit
+          file: OneSplit/abis/OneSplit.json
+      eventHandlers:
+        - event: Swap(indexed string,address[],uint256,indexed address,indexed
+            address,uint256,uint256[],uint256)
+          handler: handleSwap
+      file: OneSplit/OneSplit.wasm

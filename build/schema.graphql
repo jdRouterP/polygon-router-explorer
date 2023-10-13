@@ -1,0 +1,67 @@
+type DepositSource @entity {
+    id: ID!
+    createdAt: BigInt
+    creationBlock: BigInt
+    transactionHash: Bytes
+    sourceChainId: BigInt
+    destinationChainId: BigInt
+    resourceId: String
+    depositNonce: BigInt
+    userAddress: String
+    widgetId: BigInt
+    isGeneric: Boolean
+    isSequenced: Boolean
+    implementationContract: String 
+}
+
+type ProposalDestination @entity {
+    id: ID!
+    createdAt: BigInt
+    creationBlock: BigInt
+    transactionHash: Bytes
+    sourceChainId: BigInt
+    destinationChainId: BigInt
+    settlementToken: String
+    settlementAmount: BigInt
+    depositNonce: BigInt
+}
+
+type ProposalDestinationGeneric @entity {
+    id: ID!
+    createdAt: BigInt
+    creationBlock: BigInt
+    transactionHash: Bytes
+    sourceChainId: BigInt
+    destinationChainId: BigInt
+    depositNonce: BigInt
+}
+
+type AllTransaction @entity {
+    id: ID!
+}
+
+type Pool @entity {
+    id: ID!
+    tvl: BigInt!
+    userAddress: String
+}
+
+type PoolDayData @entity {
+    id: ID!
+    date: Int
+    dayValueLocked: BigInt
+}
+
+type SameChainDeposit @entity {
+  id: ID!
+  createdAt: BigInt
+  creationBlock: BigInt
+  chainId: BigInt
+  depositorAddress: String
+  recipientAddress: String
+  depositedAmount: String
+  receivedAmount: String
+  depositedTokenAddress: String,
+  receivedTokenAddress: String
+  widgetId: BigInt
+}
